@@ -63,6 +63,64 @@
         .load-more-btn { background: #2c5e2a; color: white; border: none; padding: 12px 32px; border-radius: 60px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .load-more-btn:hover { background: #1f4a1d; transform: scale(0.98); }
         @media (max-width: 700px) { .product-main { flex-direction: column; align-items: stretch; } .product-actions { justify-content: space-between; } .product-image { width: 60px; height: 60px; } .about-grid { flex-direction: column; } }
+
+        /* ===== МОБИЛЬНАЯ ВЕРСИЯ (только для телефонов) ===== */
+@media (max-width: 700px) {
+    
+    /* БЛОК О НАС — уменьшаем отступы, но картинки оставляем как есть */
+    .about-section {
+        padding: 16px 18px;      /* было больше — стало меньше */
+        margin-bottom: 20px;      /* уменьшили отступ снизу */
+    }
+    
+    .about-title {
+        font-size: 1.3rem;        /* заголовок чуть меньше */
+        margin-bottom: 12px;
+    }
+    
+    .about-text p {
+        font-size: 0.85rem;       /* шрифт чуть мельче, но читаемый */
+        margin-bottom: 8px;
+    }
+    
+    /* Фото оставляем того же размера, но расстояние между ними уменьшаем */
+    .about-images {
+        gap: 10px;                /* расстояние между картинками меньше */
+    }
+    
+    .about-img {
+        height: 120px;            /* чуть меньше высота (было 140px) */
+        min-width: 100px;         /* чуть меньше ширина */
+        font-size: 1.5rem;        /* иконки-заглушки поменьше */
+    }
+    
+    /* ОТСТУПЫ МЕЖДУ БЛОКАМИ */
+    .controls-bar {
+        padding: 12px 16px;
+        margin-bottom: 16px;
+    }
+    
+    /* РАССТОЯНИЯ МЕЖДУ ТОВАРАМИ */
+    .products-column {
+        margin-top: 8px;
+        gap: 12px;                /* расстояние между карточками товаров */
+    }
+    
+    .product-row {
+        padding: 12px 16px;       /* внутренние отступы в карточке товара */
+    }
+    
+    /* ШРИФТ В КАРТОЧКАХ ТОВАРА (чуть меньше) */
+    .product-title {
+        font-size: 1rem;          /* название товара */
+    }
+    .product-desc {
+        font-size: 0.75rem;       /* описание */
+    }
+    .product-price {
+        font-size: 1.1rem;        /* цена */
+    }
+}
     </style>
 </head>
 <body>
