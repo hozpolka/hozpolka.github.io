@@ -134,6 +134,34 @@
     .products-column {
         grid-template-columns: repeat(5, 1fr);  /* 3 товара в ряд */
     }
+    /* Увеличиваем фото */
+.product-image {
+    width: 120px;      /* было 80px */
+    height: 120px;     /* было 80px */
+    margin: 0 auto;    /* центрируем фото */
+}
+
+/* Фиксируем кнопку внизу карточки */
+.product-row {
+    display: flex;
+    flex-direction: column;
+    height: 100%;           /* все карточки одной высоты */
+}
+
+.product-main {
+    flex-direction: column;
+    flex-grow: 1;           /* занимает всё свободное место */
+}
+
+.product-actions {
+    margin-top: auto;       /* прижимает кнопку к низу */
+    justify-content: stretch;
+    width: 100%;
+}
+
+.btn-add {
+    width: 100%;            /* кнопка на всю ширину карточки */
+}
 }
     </style>
 </head>
