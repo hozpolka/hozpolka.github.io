@@ -129,39 +129,96 @@
     }
 }
 
-/* ===== ДЛЯ БОЛЬШИХ ЭКРАНОВ (НОУТБУКИ, ПК) ===== */
+/* ===== ДЛЯ ПЛАНШЕТОВ (2 товара) ===== */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .products-column {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;  /* уменьшили расстояние между карточками */
+    }
+}
+
+/* ===== ДЛЯ КОМПЬЮТЕРОВ (4 товара в ряд) ===== */
 @media (min-width: 1024px) {
     .products-column {
-        grid-template-columns: repeat(5, 1fr);  /* 3 товара в ряд */
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);  /* 4 товара */
+        gap: 16px;  /* маленькие отступы между карточками */
     }
-    /* Увеличиваем фото */
-.product-image {
-    width: 120px;      /* было 80px */
-    height: 120px;     /* было 80px */
-    margin: 0 auto;    /* центрируем фото */
 }
 
-/* Фиксируем кнопку внизу карточки */
-.product-row {
-    display: flex;
-    flex-direction: column;
-    height: 100%;           /* все карточки одной высоты */
-}
-
-.product-main {
-    flex-direction: column;
-    flex-grow: 1;           /* занимает всё свободное место */
-}
-
-.product-actions {
-    margin-top: auto;       /* прижимает кнопку к низу */
-    justify-content: stretch;
-    width: 100%;
-}
-
-.btn-add {
-    width: 100%;            /* кнопка на всю ширину карточки */
-}
+/* ===== ОБЩИЕ ПРАВКИ ДЛЯ СЕТКИ (и для 2, и для 4 товаров) ===== */
+@media (min-width: 768px) {
+    
+    /* Карточка товара — фиксируем высоту и убираем дырки */
+    .product-row {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 16px;
+        justify-content: space-between;
+    }
+    
+    /* Фото — хорошее качество и размер */
+    .product-image {
+        width: 100%;
+        height: 160px;          /* фиксированная высота */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f7f3;
+        border-radius: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;    /* фото не обрезается, помещается целиком */
+        image-rendering: auto;  /* хорошее качество */
+    }
+    
+    /* Иконка-заглушка, если нет фото */
+    .product-image:not(:has(img)) {
+        font-size: 3rem;
+    }
+    
+    /* Контент — растягивается, чтобы кнопка и цена были внизу */
+    .product-main {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    
+    .product-details {
+        flex-grow: 1;
+    }
+    
+    /* Цена и кнопка — всегда внизу, не прыгают */
+    .product-price {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+    
+    .product-actions {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn-add {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    /* Описание может быть коротким, не ломает вёрстку */
+    .product-desc {
+        font-size: 0.8rem;
+        line-height: 1.3;
+    }
 }
     </style>
 </head>
