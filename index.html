@@ -394,27 +394,34 @@
     
     // ----- ФИЛЬТРАЦИЯ + СОРТИРОВКА (с учётом категории) -----
     function updateFilteredAndSort() {
-        let filtered = productsData.filter(p => {
-            // поиск по названию и описанию
-            const matchesSearch = p.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
-                (p.shortDesc && p.shortDesc.toLowerCase().includes(currentSearch.toLowerCase())) ||
-                (p.fullDesc && p.fullDesc.toLowerCase().includes(currentSearch.toLowerCase()));
-            // фильтр по категории
-            const matchesCategory = (currentCategory === 'all' || p.category === currentCategory);
-            return matchesSearch && matchesCategory;
-        });
+    let filtered = productsData.filter(p => {
+        // Поиск по названию и описанию
+        const matchesSearch = p.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
+            (p.shortDesc && p.shortDesc.toLowerCase().includes(currentSearch.toLowerCase())) ||
+            (p.fullDesc && p.fullDesc.toLowerCase().includes(currentSearch.toLowerCase()));
         
-        if(currentSort === 'price_asc') filtered.sort((a,b)=>a.price-b.price);
-        else if(currentSort === 'price_desc') filtered.sort((a,b)=>b.price-a.price);
-        else if(currentSort === 'name_asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
-        else if(currentSort === 'name_desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
-        else if(currentSort === 'popular') filtered.sort((a,b)=>b.popularity - a.popularity);
+        // Фильтр по категории (разбиваем строку с категориями на массив)
+        let productCategories = [];
+        if (p.category) {
+            productCategories = p.category.split(',').map(cat => cat.trim());
+        }
+        const matchesCategory = (currentCategory === 'all' || productCategories.includes(currentCategory));
         
-        filteredProducts = filtered;
-        currentPage = 1;
-        renderCurrentPage();
-        renderLoadMoreButton();
-    }
+        return matchesSearch && matchesCategory;
+    });
+    
+    // Сортировка
+    if(currentSort === 'price_asc') filtered.sort((a,b)=>a.price-b.price);
+    else if(currentSort === 'price_desc') filtered.sort((a,b)=>b.price-a.price);
+    else if(currentSort === 'name_asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
+    else if(currentSort === 'name_desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
+    else if(currentSort === 'popular') filtered.sort((a,b)=>b.popularity - a.popularity);
+    
+    filteredProducts = filtered;
+    currentPage = 1;
+    renderCurrentPage();
+    renderLoadMoreButton();
+}
     
     function renderCurrentPage() {
         const container = document.getElementById('productsContainer');
@@ -507,10 +514,15 @@
         const contentDiv = document.getElementById('sidebarContent');
         document.getElementById('sidebarTitle').innerText = 'Меню';
         
-        // собираем уникальные категории из товаров
-        const categoriesSet = new Set();
-        productsData.forEach(p => { if(p.category) categoriesSet.add(p.category); });
-        const categories = ['Все товары', ...Array.from(categoriesSet).sort()];
+       // собираем уникальные категории из товаров (разбивая строки по запятым)
+const categoriesSet = new Set();
+productsData.forEach(p => {
+    if(p.category) {
+        const cats = p.category.split(',').map(cat => cat.trim());
+        cats.forEach(cat => categoriesSet.add(cat));
+    }
+});
+const categories = ['Все товары', ...Array.from(categoriesSet).sort()];
         
         let categoriesHtml = '<div class="categories-list">';
         categories.forEach(cat => {
