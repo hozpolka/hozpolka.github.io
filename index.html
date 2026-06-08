@@ -120,6 +120,21 @@
         font-size: 1.1rem;
     }
 }
+        /* ===== СЕТКА ДЛЯ КОМПЬЮТЕРОВ ===== */
+@media (min-width: 768px) {
+    .products-column {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);  /* 2 товара в ряд */
+        gap: 40px;
+    }
+}
+
+/* ===== ДЛЯ БОЛЬШИХ ЭКРАНОВ (НОУТБУКИ, ПК) ===== */
+@media (min-width: 1024px) {
+    .products-column {
+        grid-template-columns: repeat(5, 1fr);  /* 3 товара в ряд */
+    }
+}
     </style>
 </head>
 <body>
