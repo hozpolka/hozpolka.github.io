@@ -220,6 +220,61 @@
         line-height: 1.3;
     }
 }
+        // === ПОСТРАНИЧНАЯ НАВИГАЦИЯ ===
+function renderPagination() {
+    const container = document.getElementById('loadMoreContainer');
+    if (!container) return;
+    
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    
+    if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+    
+    let html = '<div style="display: flex; justify-content: center; gap: 12px; align-items: center; flex-wrap: wrap;">';
+    
+    // Кнопка "Назад"
+    if (currentPage > 1) {
+        html += `<button id="prevPageBtn" class="load-more-btn" style="background:#6c757d;">← Назад</button>`;
+    }
+    
+    // Индикатор страницы
+    html += `<span style="padding: 8px 16px; background: white; border-radius: 40px; font-weight: 500;">Страница ${currentPage} из ${totalPages}</span>`;
+    
+    // Кнопка "Вперед"
+    if (currentPage < totalPages) {
+        html += `<button id="nextPageBtn" class="load-more-btn">Вперед →</button>`;
+    }
+    
+    html += '</div>';
+    container.innerHTML = html;
+    
+    // Вешаем обработчики
+    const prevBtn = document.getElementById('prevPageBtn');
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderCurrentPage();
+                renderPagination();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    }
+    
+    const nextBtn = document.getElementById('nextPageBtn');
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderCurrentPage();
+                renderPagination();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    }
+}
     </style>
 </head>
 <body>
@@ -420,7 +475,7 @@
     filteredProducts = filtered;
     currentPage = 1;
     renderCurrentPage();
-    renderLoadMoreButton();
+    renderPagination();
 }
     
     function renderCurrentPage() {
@@ -487,7 +542,7 @@
         }));
     }
     
-    function renderLoadMoreButton() {
+    function renderPagination() {
         const container = document.getElementById('loadMoreContainer');
         if(!container) return;
         const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -497,7 +552,7 @@
             if(btn) btn.addEventListener('click', () => {
                 currentPage++;
                 renderCurrentPage();
-                renderLoadMoreButton();
+                renderPagination();
                 document.getElementById('productsContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         } else {
