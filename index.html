@@ -514,8 +514,7 @@
         const contentDiv = document.getElementById('sidebarContent');
         document.getElementById('sidebarTitle').innerText = 'Меню';
         
-       // собираем уникальные категории из товаров (разбивая строки по запятым)
-const categoriesSet = new Set();
+      const categoriesSet = new Set();
 productsData.forEach(p => {
     if(p.category) {
         const cats = p.category.split(',').map(cat => cat.trim());
