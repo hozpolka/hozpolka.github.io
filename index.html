@@ -87,17 +87,69 @@
             .products-column { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
         }
         @media (min-width: 768px) {
-            .product-row { display: flex; flex-direction: column; height: 480px; padding: 16px; justify-content: space-between; }
-            .product-image { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 16px; margin-bottom: 12px; }
-            .product-image img { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; }
-            .product-image:not(:has(img)) { font-size: 3rem; }
-            .product-main { display: flex; flex-direction: column; flex-grow: 1; }
-            .product-details { flex-grow: 1; }
-            .product-price { margin-top: 12px; margin-bottom: 12px; font-size: 1.2rem; font-weight: 800; }
-            .product-actions { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
-            .btn-add { width: 100%; padding: 10px; }
-            .product-desc { font-size: 0.8rem; line-height: 1.3; }
-        }
+    .product-row {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 16px;
+    }
+    
+    .product-image {
+        width: 100%;
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        border-radius: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        image-rendering: auto;
+    }
+    
+    .product-image:not(:has(img)) {
+        font-size: 3rem;
+    }
+    
+    .product-main {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    
+    .product-details {
+        flex-grow: 1;
+    }
+    
+    .product-price {
+        margin-top: auto;
+        margin-bottom: 12px;
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+    
+    .product-actions {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn-add {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .product-desc {
+        font-size: 0.8rem;
+        line-height: 1.3;
+    }
+}
     </style>
 </head>
 <body>
