@@ -65,216 +65,39 @@
         @media (max-width: 700px) { .product-main { flex-direction: column; align-items: stretch; } .product-actions { justify-content: space-between; } .product-image { width: 60px; height: 60px; } .about-grid { flex-direction: column; } }
 
         /* ===== МОБИЛЬНАЯ ВЕРСИЯ (только для телефонов) ===== */
-@media (max-width: 700px) {
-    
-        /* Убираем лишнее расстояние между шапкой и блоком О нас */
-    .top-bar {
-        margin-bottom: 8px;  /* вместо стандартного 28px */
-    }
-    
-    /* БЛОК О НАС — уменьшаем отступы, но картинки оставляем как есть */
-    .about-section {
-        padding: 16px 18px;
-        margin-bottom: 12px;      /* было 20px — стало меньше */
-    }
-    
-    .about-title {
-        font-size: 1.3rem;
-        margin-bottom: 12px;
-    }
-    
-    .about-text p {
-        font-size: 0.85rem;
-        margin-bottom: 8px;
-    }
-    
-    /* Скрываем картинки на телефонах */
-    .about-images {
-        display: none;
-    }
-    
-    /* ОТСТУПЫ МЕЖДУ БЛОКАМИ */
-    .controls-bar {
-        padding: 12px 16px;
-        margin-bottom: 16px;
-    }
-    
-    /* РАССТОЯНИЯ МЕЖДУ ТОВАРАМИ */
-    .products-column {
-        margin-top: 8px;
-        gap: 12px;
-    }
-    
-    .product-row {
-        padding: 12px 16px;
-    }
-    
-    /* ШРИФТ В КАРТОЧКАХ ТОВАРА */
-    .product-title {
-        font-size: 1rem;
-    }
-    .product-desc {
-        font-size: 0.75rem;
-    }
-    .product-price {
-        font-size: 1.1rem;
-    }
-}
+        @media (max-width: 700px) {
+            .top-bar { margin-bottom: 8px; }
+            .about-section { padding: 16px 18px; margin-bottom: 12px; }
+            .about-title { font-size: 1.3rem; margin-bottom: 12px; }
+            .about-text p { font-size: 0.85rem; margin-bottom: 8px; }
+            .about-images { display: none; }
+            .controls-bar { padding: 12px 16px; margin-bottom: 16px; }
+            .products-column { margin-top: 8px; gap: 12px; }
+            .product-row { padding: 12px 16px; }
+            .product-title { font-size: 1rem; }
+            .product-desc { font-size: 0.75rem; }
+            .product-price { font-size: 1.1rem; }
+        }
+        
         /* ===== СЕТКА ДЛЯ КОМПЬЮТЕРОВ ===== */
-@media (min-width: 768px) {
-    .products-column {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);  /* 2 товара в ряд */
-        gap: 40px;
-    }
-}
-
-/* ===== ДЛЯ ПЛАНШЕТОВ (2 товара) ===== */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .products-column {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;  /* уменьшили расстояние между карточками */
-    }
-}
-
-/* ===== ДЛЯ КОМПЬЮТЕРОВ (4 товара в ряд) ===== */
-@media (min-width: 1024px) {
-    .products-column {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);  /* 4 товара */
-        gap: 16px;  /* маленькие отступы между карточками */
-    }
-}
-
-/* ===== ОБЩИЕ ПРАВКИ ДЛЯ СЕТКИ (и для 2, и для 4 товаров) ===== */
-@media (min-width: 768px) {
-    
-    /* Карточка товара — фиксируем высоту и убираем дырки */
-    .product-row {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        padding: 16px;
-        justify-content: space-between;
-    }
-    
-    /* Фото — хорошее качество и размер */
-    .product-image {
-        width: 100%;
-        height: 160px;          /* фиксированная высота */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #ffffff;
-        border-radius: 16px;
-        margin-bottom: 12px;
-    }
-    
-    .product-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;    /* фото не обрезается, помещается целиком */
-        image-rendering: auto;  /* хорошее качество */
-    }
-    
-    /* Иконка-заглушка, если нет фото */
-    .product-image:not(:has(img)) {
-        font-size: 3rem;
-    }
-    
-    /* Контент — растягивается, чтобы кнопка и цена были внизу */
-    .product-main {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-    
-    .product-details {
-        flex-grow: 1;
-    }
-    
-    /* Цена и кнопка — всегда внизу, не прыгают */
-    .product-price {
-        margin-top: 12px;
-        margin-bottom: 12px;
-        font-size: 1.2rem;
-        font-weight: 800;
-    }
-    
-    .product-actions {
-        margin-top: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .btn-add {
-        width: 100%;
-        padding: 10px;
-    }
-    
-    /* Описание может быть коротким, не ломает вёрстку */
-    .product-desc {
-        font-size: 0.8rem;
-        line-height: 1.3;
-    }
-}
-        // === ПОСТРАНИЧНАЯ НАВИГАЦИЯ ===
-function renderPagination() {
-    const container = document.getElementById('loadMoreContainer');
-    if (!container) return;
-    
-    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-    
-    if (totalPages <= 1) {
-        container.innerHTML = '';
-        return;
-    }
-    
-    let html = '<div style="display: flex; justify-content: center; gap: 12px; align-items: center; flex-wrap: wrap;">';
-    
-    // Кнопка "Назад"
-    if (currentPage > 1) {
-        html += `<button id="prevPageBtn" class="load-more-btn" style="background:#6c757d;">← Назад</button>`;
-    }
-    
-    // Индикатор страницы
-    html += `<span style="padding: 8px 16px; background: white; border-radius: 40px; font-weight: 500;">Страница ${currentPage} из ${totalPages}</span>`;
-    
-    // Кнопка "Вперед"
-    if (currentPage < totalPages) {
-        html += `<button id="nextPageBtn" class="load-more-btn">Вперед →</button>`;
-    }
-    
-    html += '</div>';
-    container.innerHTML = html;
-    
-    // Вешаем обработчики
-    const prevBtn = document.getElementById('prevPageBtn');
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderCurrentPage();
-                renderPagination();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-    }
-    
-    const nextBtn = document.getElementById('nextPageBtn');
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderCurrentPage();
-                renderPagination();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-    }
-}
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .products-column { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        }
+        @media (min-width: 1024px) {
+            .products-column { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        }
+        @media (min-width: 768px) {
+            .product-row { display: flex; flex-direction: column; height: 100%; padding: 16px; justify-content: space-between; }
+            .product-image { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 16px; margin-bottom: 12px; }
+            .product-image img { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; }
+            .product-image:not(:has(img)) { font-size: 3rem; }
+            .product-main { display: flex; flex-direction: column; flex-grow: 1; }
+            .product-details { flex-grow: 1; }
+            .product-price { margin-top: 12px; margin-bottom: 12px; font-size: 1.2rem; font-weight: 800; }
+            .product-actions { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+            .btn-add { width: 100%; padding: 10px; }
+            .product-desc { font-size: 0.8rem; line-height: 1.3; }
+        }
     </style>
 </head>
 <body>
@@ -296,7 +119,7 @@ function renderPagination() {
                 ✨ <strong>Качественно</strong> — только проверенные бренды и честные цены.<br>
                 ✨ <strong>Рядом</strong> — ул. Аксенова, 18а, без выходных с 08:00 до 20:00.<br>
                 ✨ <strong>С заботой</strong> — помогаем подобрать инструмент и всегда рады совету.</p>
-                <p> &#10071 Актуальность цен и наличия просим проверять у менеджеров <br> &#10071 Данные о товарах носят ознакомительный характер </p> Посетите наш магазин — убедитесь сами! 🛠️  </p>
+                <p> ⚠️ Актуальность цен и наличия просим проверять у менеджеров <br> ⚠️ Данные о товарах носят ознакомительный характер <br> Посетите наш магазин — убедитесь сами! 🛠️</p>
             </div>
             <div class="about-images">
                 <div class="about-img"><img src="images/another/1.jpg" alt="Наш магазин"></div>
@@ -328,9 +151,9 @@ function renderPagination() {
     // ============================================================
     // НАСТРОЙКИ (меняй здесь)
     // ============================================================
-    const CSV_URL = 'products.csv';     // имя твоего CSV-файла
-    const ITEMS_PER_PAGE = 20;          // товаров на страницу
-    const YOUR_EMAIL = "dzhoni2001@mail.ru"; // ЗАМЕНИ НА СВОЙ EMAIL
+    const CSV_URL = 'products.csv';
+    const ITEMS_PER_PAGE = 20;
+    const YOUR_EMAIL = "dzhoni2001@mail.ru";
     // ============================================================
     
     let productsData = [];
@@ -339,9 +162,8 @@ function renderPagination() {
     let currentSearch = '', currentSort = 'popular';
     let currentPage = 1;
     let filteredProducts = [];
-    let currentCategory = 'all'; // для фильтрации по категории
+    let currentCategory = 'all';
     
-    // ----- загрузка CSV -----
     async function loadProductsFromCSV() {
         try {
             const response = await fetch(CSV_URL);
@@ -349,13 +171,11 @@ function renderPagination() {
             const csvText = await response.text();
             const rows = csvText.split(/\r?\n/);
             const headers = rows[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-            
             const products = [];
             for (let i = 1; i < rows.length; i++) {
                 if (!rows[i].trim()) continue;
                 const values = parseCSVRow(rows[i]);
                 if (values.length < headers.length) continue;
-                
                 const product = {};
                 headers.forEach((h, idx) => {
                     let val = values[idx] ? values[idx].trim().replace(/^"|"$/g, '') : '';
@@ -414,7 +234,6 @@ function renderPagination() {
         setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2000);
     }
     
-    // ----- корзина -----
     function saveCart() { localStorage.setItem('hoz_cart_final', JSON.stringify(cart)); updateCartUI(); updateFloatingBadge(); }
     function loadCart() { const saved = localStorage.getItem('hoz_cart_final'); if(saved) cart = JSON.parse(saved); else cart = []; updateCartUI(); updateFloatingBadge(); }
     function updateCartUI() { if(currentSidebarMode === 'cart') renderSidebarCart(); updateFloatingBadge(); }
@@ -447,36 +266,28 @@ function renderPagination() {
         showToast(`✅ ${product.name} +${qtyToAdd} шт.`);
     }
     
-    // ----- ФИЛЬТРАЦИЯ + СОРТИРОВКА (с учётом категории) -----
     function updateFilteredAndSort() {
-    let filtered = productsData.filter(p => {
-        // Поиск по названию и описанию
-        const matchesSearch = p.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
-            (p.shortDesc && p.shortDesc.toLowerCase().includes(currentSearch.toLowerCase())) ||
-            (p.fullDesc && p.fullDesc.toLowerCase().includes(currentSearch.toLowerCase()));
-        
-        // Фильтр по категории (разбиваем строку с категориями на массив)
-        let productCategories = [];
-        if (p.category) {
-            productCategories = p.category.split(',').map(cat => cat.trim());
-        }
-        const matchesCategory = (currentCategory === 'all' || productCategories.includes(currentCategory));
-        
-        return matchesSearch && matchesCategory;
-    });
-    
-    // Сортировка
-    if(currentSort === 'price_asc') filtered.sort((a,b)=>a.price-b.price);
-    else if(currentSort === 'price_desc') filtered.sort((a,b)=>b.price-a.price);
-    else if(currentSort === 'name_asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
-    else if(currentSort === 'name_desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
-    else if(currentSort === 'popular') filtered.sort((a,b)=>b.popularity - a.popularity);
-    
-    filteredProducts = filtered;
-    currentPage = 1;
-    renderCurrentPage();
-    renderPagination();
-}
+        let filtered = productsData.filter(p => {
+            const matchesSearch = p.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                (p.shortDesc && p.shortDesc.toLowerCase().includes(currentSearch.toLowerCase())) ||
+                (p.fullDesc && p.fullDesc.toLowerCase().includes(currentSearch.toLowerCase()));
+            let productCategories = [];
+            if (p.category) {
+                productCategories = p.category.split(',').map(cat => cat.trim());
+            }
+            const matchesCategory = (currentCategory === 'all' || productCategories.includes(currentCategory));
+            return matchesSearch && matchesCategory;
+        });
+        if(currentSort === 'price_asc') filtered.sort((a,b)=>a.price-b.price);
+        else if(currentSort === 'price_desc') filtered.sort((a,b)=>b.price-a.price);
+        else if(currentSort === 'name_asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
+        else if(currentSort === 'name_desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
+        else if(currentSort === 'popular') filtered.sort((a,b)=>b.popularity - a.popularity);
+        filteredProducts = filtered;
+        currentPage = 1;
+        renderCurrentPage();
+        renderPagination();
+    }
     
     function renderCurrentPage() {
         const container = document.getElementById('productsContainer');
@@ -484,18 +295,15 @@ function renderPagination() {
         const start = (currentPage - 1) * ITEMS_PER_PAGE;
         const end = start + ITEMS_PER_PAGE;
         const pageProducts = filteredProducts.slice(start, end);
-        
         if(pageProducts.length === 0 && filteredProducts.length > 0 && currentPage > 1) {
             currentPage = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
             renderCurrentPage();
             return;
         }
-        
         if(filteredProducts.length === 0) {
             container.innerHTML = '<div style="text-align:center; padding:40px;">Товары не найдены</div>';
             return;
         }
-        
         let html = '';
         pageProducts.forEach(prod => {
             const imgHtml = prod.image ? `<img src="${prod.image}" alt="${prod.name}">` : '🛠️';
@@ -517,7 +325,6 @@ function renderPagination() {
                     </div></div>`;
         });
         container.innerHTML = html;
-        
         document.querySelectorAll('.qty-dec').forEach(btn => btn.addEventListener('click', (e) => { 
             let id = btn.getAttribute('data-id'); 
             let input = document.querySelector(`.qty-input[data-id="${id}"]`);
@@ -542,54 +349,72 @@ function renderPagination() {
         }));
     }
     
+    // ========== ОСНОВНАЯ ФУНКЦИЯ НАВИГАЦИИ (НАЗАД/ВПЕРЕД) ==========
     function renderPagination() {
         const container = document.getElementById('loadMoreContainer');
-        if(!container) return;
+        if (!container) return;
         const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-        if(currentPage < totalPages) {
-            container.innerHTML = `<button id="loadMoreBtn" class="load-more-btn">Показать ещё (${currentPage * ITEMS_PER_PAGE} из ${filteredProducts.length})</button>`;
-            const btn = document.getElementById('loadMoreBtn');
-            if(btn) btn.addEventListener('click', () => {
-                currentPage++;
-                renderCurrentPage();
-                renderPagination();
-                document.getElementById('productsContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+        let html = '<div style="display: flex; justify-content: center; gap: 12px; align-items: center; flex-wrap: wrap;">';
+        if (currentPage > 1) {
+            html += `<button id="prevPageBtn" class="load-more-btn" style="background:#6c757d;">← Назад</button>`;
+        }
+        html += `<span style="padding: 8px 16px; background: white; border-radius: 40px; font-weight: 500;">Страница ${currentPage} из ${totalPages}</span>`;
+        if (currentPage < totalPages) {
+            html += `<button id="nextPageBtn" class="load-more-btn">Вперед →</button>`;
+        }
+        html += '</div>';
+        container.innerHTML = html;
+        
+        const prevBtn = document.getElementById('prevPageBtn');
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderCurrentPage();
+                    renderPagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             });
-        } else {
-            if(filteredProducts.length > 0) {
-                container.innerHTML = `<p style="text-align:center; color:#6b8c5c;">✨ Все товары загружены (${filteredProducts.length})</p>`;
-            } else {
-                container.innerHTML = '';
-            }
+        }
+        const nextBtn = document.getElementById('nextPageBtn');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderCurrentPage();
+                    renderPagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
         }
     }
     
-    // --- сайдбар с категориями из CSV ---
     function renderSidebarMenu() {
         const contentDiv = document.getElementById('sidebarContent');
         document.getElementById('sidebarTitle').innerText = 'Меню';
-        
-      const categoriesSet = new Set();
-productsData.forEach(p => {
-    if(p.category) {
-        const cats = p.category.split(',').map(cat => cat.trim());
-        cats.forEach(cat => categoriesSet.add(cat));
-    }
-});
-const categories = ['Все товары', ...Array.from(categoriesSet).sort()];
-        
+        const categoriesSet = new Set();
+        productsData.forEach(p => {
+            if(p.category) {
+                const cats = p.category.split(',').map(cat => cat.trim());
+                cats.forEach(cat => categoriesSet.add(cat));
+            }
+        });
+        const categories = ['Все товары', ...Array.from(categoriesSet).sort()];
         let categoriesHtml = '<div class="categories-list">';
         categories.forEach(cat => {
             const catKey = cat === 'Все товары' ? 'all' : cat;
             categoriesHtml += `<div class="category-item" data-cat="${catKey}">${cat === 'Все товары' ? '🔄 Все товары' : '📁 ' + cat}</div>`;
         });
         categoriesHtml += '</div>';
-        
         contentDiv.innerHTML = categoriesHtml + `
             <div class="contacts-block">
                 <strong>📞 Свяжитесь с нами</strong><br>
                 <a href="tel:+79023982669">📱 +7 (902) 398-26-69</a>
-                <a href="https://max.ru/u/f9LHodD0cOJ2uWEsT3qVAxNGDB2q04qSm8gMadv8lW5RNs54f03aW78kX8M" target="_blank">💬 Макс </a>
+                <a href="https://max.ru/u/f9LHodD0cOJ2uWEsT3qVAxNGDB2q04qSm8gMadv8lW5RNs54f03aW78kX8M" target="_blank">💬 Макс</a>
                 <a href="mailto:dzhoni2001@mail.ru">✉️ dzhoni2001@mail.ru</a>
             </div>
             <div class="contacts-block">
@@ -600,14 +425,12 @@ const categories = ['Все товары', ...Array.from(categoriesSet).sort()];
                 <p style="font-size:12px; margin-top:8px;">🚗 Схема проезда: по ул. Аксенова, центральный вход</p>
             </div>
         `;
-        
         ymaps.ready(initMap);
         function initMap() {
             var myMap = new ymaps.Map("map", { center: [55.117642, 36.614419], zoom: 17, controls: ['zoomControl', 'fullscreenControl'] });
             var myPlacemark = new ymaps.Placemark([55.117642, 36.614419], { hintContent: 'Хозтовары', balloonContent: 'г. Обнинск, ул. Аксенова, 18а' });
             myMap.geoObjects.add(myPlacemark);
         }
-        
         document.querySelectorAll('.category-item').forEach(cat => {
             cat.addEventListener('click', (e) => {
                 let filter = cat.getAttribute('data-cat');
@@ -686,7 +509,6 @@ const categories = ['Все товары', ...Array.from(categoriesSet).sort()];
     document.getElementById('closeModal').addEventListener('click', () => document.getElementById('detailModal').style.display='none');
     function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
     
-    // Запуск
     loadCart();
     loadProductsFromCSV();
 </script>
