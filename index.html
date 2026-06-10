@@ -92,34 +92,14 @@
             .products-column { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
         }
         
-        /* ===== ЖЁСТКАЯ ФИКСАЦИЯ ЦЕНЫ И КНОПКИ ===== */
-@media (min-width: 768px) {
-    .product-row {
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
-        height: 100% !important;
-    }
-    
-    .product-row .product-main {
-        display: flex !important;
-        flex-direction: column !important;
-        flex: 1 !important;
-    }
-    
-    .product-row .product-details {
-        flex: 1 !important;
-    }
-    
-    .product-row .product-price {
-        margin-top: 20px !important;
-        margin-bottom: 10px !important;
-    }
-    
-    .product-row .product-actions {
-        margin-top: 0 !important;
-    }
-}
+        /* ===== ФИКСАЦИЯ ЦЕНЫ И КНОПКИ (ГЛАВНОЕ!) ===== */
+        @media (min-width: 768px) {
+            .product-row {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                padding: 16px;
+            }
             
             .product-image {
                 width: 100%;
