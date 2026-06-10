@@ -76,12 +76,8 @@
             .product-desc { font-size: 0.75rem; }
             .product-price { font-size: 1.1rem; }
         }
-        @media (min-width: 768px) and (max-width: 1023px) {
-            .products-column { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        }
-        @media (min-width: 1024px) {
-            .products-column { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-        }
+        @media (min-width: 768px) and (max-width: 1023px) { .products-column { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+        @media (min-width: 1024px) { .products-column { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; } }
         @media (min-width: 768px) {
             .product-row { display: flex; flex-direction: column; height: 100%; padding: 16px; }
             .product-image { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 16px; margin-bottom: 12px; }
@@ -160,6 +156,10 @@
     let filteredProducts = [];
     let currentCategory = 'all';
     
+    // Кеш для меню
+    let sidebarMenuHTML = null;
+    let mapInitialized = false;
+    
     async function loadProductsFromCSV() {
         try {
             const response = await fetch(CSV_URL);
@@ -191,6 +191,8 @@
             } else {
                 productsData = products;
             }
+            // Очищаем кеш меню при загрузке новых товаров
+            sidebarMenuHTML = null;
             updateFilteredAndSort();
         } catch (error) {
             console.error('Ошибка загрузки CSV:', error);
@@ -288,18 +290,20 @@
     function renderCurrentPage() {
         const container = document.getElementById('productsContainer');
         if(!container) return;
+        
+        // Защита от выхода за границы
+        const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+        if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+        
         const start = (currentPage - 1) * ITEMS_PER_PAGE;
         const end = start + ITEMS_PER_PAGE;
         const pageProducts = filteredProducts.slice(start, end);
-        if(pageProducts.length === 0 && filteredProducts.length > 0 && currentPage > 1) {
-            currentPage = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-            renderCurrentPage();
-            return;
-        }
+        
         if(filteredProducts.length === 0) {
             container.innerHTML = '<div style="text-align:center; padding:40px;">Товары не найдены</div>';
             return;
         }
+        
         let html = '';
         pageProducts.forEach(prod => {
             const imgHtml = prod.image ? `<img src="${prod.image}" alt="${prod.name}">` : '🛠️';
@@ -321,6 +325,8 @@
                     </div></div>`;
         });
         container.innerHTML = html;
+        
+        // Обработчики для кнопок внутри товаров
         document.querySelectorAll('.qty-dec').forEach(btn => btn.addEventListener('click', (e) => { 
             let id = btn.getAttribute('data-id'); 
             let input = document.querySelector(`.qty-input[data-id="${id}"]`);
@@ -349,10 +355,16 @@
         const container = document.getElementById('loadMoreContainer');
         if (!container) return;
         const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+        
         if (totalPages <= 1) {
             container.innerHTML = '';
             return;
         }
+        
+        // Блокируем двойное нажатие, пока идёт обновление
+        if (container.getAttribute('data-updating') === 'true') return;
+        container.setAttribute('data-updating', 'true');
+        
         let html = '<div style="display: flex; justify-content: center; gap: 12px; align-items: center; flex-wrap: wrap;">';
         if (currentPage > 1) {
             html += `<button id="prevPageBtn" class="load-more-btn">← Назад</button>`;
@@ -364,33 +376,57 @@
         html += '</div>';
         container.innerHTML = html;
         
+        // Обработчики с защитой от повторного нажатия
         const prevBtn = document.getElementById('prevPageBtn');
         if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    renderCurrentPage();
-                    renderPagination();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
+            prevBtn.onclick = () => {
+                if (currentPage <= 1) return;
+                currentPage--;
+                renderCurrentPage();
+                renderPagination();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
         }
+        
         const nextBtn = document.getElementById('nextPageBtn');
         if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    renderCurrentPage();
-                    renderPagination();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
+            nextBtn.onclick = () => {
+                if (currentPage >= totalPages) return;
+                currentPage++;
+                renderCurrentPage();
+                renderPagination();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
         }
+        
+        container.setAttribute('data-updating', 'false');
+    }
+    
+    // ========== УСКОРЕННОЕ МЕНЮ (КЕШИРОВАНИЕ) ==========
+    function attachCategoryEvents() {
+        document.querySelectorAll('.category-item').forEach(cat => {
+            cat.removeEventListener('click', categoryClickHandler);
+            cat.addEventListener('click', categoryClickHandler);
+        });
+    }
+    
+    function categoryClickHandler(e) {
+        let filter = this.getAttribute('data-cat');
+        currentCategory = filter;
+        updateFilteredAndSort();
+        closeSidebar();
     }
     
     function renderSidebarMenu() {
         const contentDiv = document.getElementById('sidebarContent');
         document.getElementById('sidebarTitle').innerText = 'Меню';
+        
+        if (sidebarMenuHTML) {
+            contentDiv.innerHTML = sidebarMenuHTML;
+            attachCategoryEvents();
+            return;
+        }
+        
         const categoriesSet = new Set();
         productsData.forEach(p => {
             if(p.category) {
@@ -405,7 +441,8 @@
             categoriesHtml += `<div class="category-item" data-cat="${catKey}">${cat === 'Все товары' ? '🔄 Все товары' : '📁 ' + cat}</div>`;
         });
         categoriesHtml += '</div>';
-        contentDiv.innerHTML = categoriesHtml + `
+        
+        const menuHTML = categoriesHtml + `
             <div class="contacts-block">
                 <strong>📞 Свяжитесь с нами</strong><br>
                 <a href="tel:+79023982669">📱 +7 (902) 398-26-69</a>
@@ -420,20 +457,20 @@
                 <p style="font-size:12px; margin-top:8px;">🚗 Схема проезда: по ул. Аксенова, центральный вход</p>
             </div>
         `;
-        ymaps.ready(initMap);
-        function initMap() {
-            var myMap = new ymaps.Map("map", { center: [55.117642, 36.614419], zoom: 17, controls: ['zoomControl', 'fullscreenControl'] });
-            var myPlacemark = new ymaps.Placemark([55.117642, 36.614419], { hintContent: 'Хозтовары', balloonContent: 'г. Обнинск, ул. Аксенова, 18а' });
-            myMap.geoObjects.add(myPlacemark);
-        }
-        document.querySelectorAll('.category-item').forEach(cat => {
-            cat.addEventListener('click', (e) => {
-                let filter = cat.getAttribute('data-cat');
-                currentCategory = filter;
-                updateFilteredAndSort();
-                closeSidebar();
+        
+        sidebarMenuHTML = menuHTML;
+        contentDiv.innerHTML = menuHTML;
+        
+        if (!mapInitialized) {
+            ymaps.ready(() => {
+                var myMap = new ymaps.Map("map", { center: [55.117642, 36.614419], zoom: 17, controls: ['zoomControl', 'fullscreenControl'] });
+                var myPlacemark = new ymaps.Placemark([55.117642, 36.614419], { hintContent: 'Хозтовары', balloonContent: 'г. Обнинск, ул. Аксенова, 18а' });
+                myMap.geoObjects.add(myPlacemark);
+                mapInitialized = true;
             });
-        });
+        }
+        
+        attachCategoryEvents();
     }
     
     function renderSidebarCart() {
