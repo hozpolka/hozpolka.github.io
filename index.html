@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>уДжона</title>
+    <title>Хозтовары — Обнинск</title>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш-ключ&lang=ru_RU" type="text/javascript"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,13 +62,8 @@
         .load-more-container { text-align: center; margin-top: 30px; margin-bottom: 30px; }
         .load-more-btn { background: #2c5e2a; color: white; border: none; padding: 12px 32px; border-radius: 60px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         .load-more-btn:hover { background: #1f4a1d; transform: scale(0.98); }
-        
-        /* ===== ТЕЛЕФОНЫ ===== */
+        @media (max-width: 700px) { .product-main { flex-direction: column; align-items: stretch; } .product-actions { justify-content: space-between; } .product-image { width: 60px; height: 60px; } .about-grid { flex-direction: column; } }
         @media (max-width: 700px) {
-            .product-main { flex-direction: column; align-items: stretch; }
-            .product-actions { justify-content: space-between; }
-            .product-image { width: 60px; height: 60px; }
-            .about-grid { flex-direction: column; }
             .top-bar { margin-bottom: 8px; }
             .about-section { padding: 16px 18px; margin-bottom: 12px; }
             .about-title { font-size: 1.3rem; margin-bottom: 12px; }
@@ -81,83 +76,23 @@
             .product-desc { font-size: 0.75rem; }
             .product-price { font-size: 1.1rem; }
         }
-        
-        /* ===== СЕТКА ДЛЯ ПЛАНШЕТОВ ===== */
         @media (min-width: 768px) and (max-width: 1023px) {
             .products-column { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
         }
-        
-        /* ===== СЕТКА ДЛЯ КОМПЬЮТЕРОВ ===== */
         @media (min-width: 1024px) {
             .products-column { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
         }
-        
-        /* ===== ФИКСАЦИЯ ЦЕНЫ И КНОПКИ (ГЛАВНОЕ!) ===== */
         @media (min-width: 768px) {
-            .product-row {
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-                padding: 16px;
-            }
-            
-            .product-image {
-                width: 100%;
-                height: 160px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #ffffff;
-                border-radius: 16px;
-                margin-bottom: 12px;
-            }
-            
-            .product-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-            }
-            
-            .product-image:not(:has(img)) {
-                font-size: 3rem;
-            }
-            
-            .product-main {
-                display: flex;
-                flex-direction: column;
-                flex-grow: 1;
-            }
-            
-            .product-details {
-                flex-grow: 1;
-            }
-            
-            /* 👇👇👇 ГЛАВНЫЕ СТРОКИ — ПРИЖИМАЮТ ЦЕНУ И КНОПКУ 👇👇👇 */
-            .product-price {
-                margin-top: auto;
-                margin-bottom: 12px;
-                font-size: 1.2rem;
-                font-weight: 800;
-            }
-            
-            .product-actions {
-                margin-top: 0;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-            /* 👆👆👆 👆👆👆 */
-            
-            .btn-add {
-                width: 100%;
-                padding: 10px;
-            }
-            
-            .product-desc {
-                font-size: 0.8rem;
-                line-height: 1.3;
-                color: #5f7359;   /* ← добавляем цвет */
-            }
+            .product-row { display: flex; flex-direction: column; height: 100%; padding: 16px; }
+            .product-image { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 16px; margin-bottom: 12px; }
+            .product-image img { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; }
+            .product-image:not(:has(img)) { font-size: 3rem; }
+            .product-main { display: flex; flex-direction: column; flex-grow: 1; }
+            .product-details { flex-grow: 1; }
+            .product-price { margin-top: auto; margin-bottom: 12px; font-size: 1.2rem; font-weight: 800; }
+            .product-actions { margin-top: 0; display: flex; flex-direction: column; gap: 10px; }
+            .btn-add { width: 100%; padding: 10px; }
+            .product-desc { font-size: 0.8rem; line-height: 1.3; }
         }
     </style>
 </head>
@@ -175,12 +110,11 @@
         <div class="about-title">О нас</div>
         <div class="about-grid">
             <div class="about-text">
-                <p><strong>Мы в Обнинске —</strong> это больше чем просто магазин. Мы работаем для вас с 1999 года и знаем, что нужно для дома, дачи и стройки.</p>
-                <p>✨ <strong>Удобно</strong> — широкий ассортимент от булавок до сложного инструмента.<br>
+                <p><strong>Хозтовары в Обнинске —</strong> это больше чем просто магазин. Мы работаем для вас с 1999 года и знаем, что нужно для дома, дачи и стройки.</p>
+                <p>✨ <strong>Удобно</strong> — широкий ассортимент от молотков до сложного инструмента.<br>
                 ✨ <strong>Качественно</strong> — только проверенные бренды и честные цены.<br>
                 ✨ <strong>Рядом</strong> — ул. Аксенова, 18а, без выходных с 08:00 до 20:00.<br>
-                ✨ <strong>С заботой</strong> — помогаем подобрать продукцию и всегда рады совету.</p>
-                ✨ <strong>Доставка от любой суммы через сервисы Яндкеса.</p>
+                ✨ <strong>С заботой</strong> — помогаем подобрать инструмент и всегда рады совету.</p>
                 <p> ⚠️ Актуальность цен и наличия просим проверять у менеджеров <br> ⚠️ Данные о товарах носят ознакомительный характер <br> Посетите наш магазин — убедитесь сами! 🛠️</p>
             </div>
             <div class="about-images">
@@ -226,10 +160,6 @@
     let filteredProducts = [];
     let currentCategory = 'all';
     
-    // Кеш для меню
-    let sidebarMenuHTML = null;
-    let mapInitialized = false;
-    
     async function loadProductsFromCSV() {
         try {
             const response = await fetch(CSV_URL);
@@ -261,7 +191,6 @@
             } else {
                 productsData = products;
             }
-            sidebarMenuHTML = null;
             updateFilteredAndSort();
         } catch (error) {
             console.error('Ошибка загрузки CSV:', error);
@@ -359,19 +288,18 @@
     function renderCurrentPage() {
         const container = document.getElementById('productsContainer');
         if(!container) return;
-        
-        const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-        if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
-        
         const start = (currentPage - 1) * ITEMS_PER_PAGE;
         const end = start + ITEMS_PER_PAGE;
         const pageProducts = filteredProducts.slice(start, end);
-        
+        if(pageProducts.length === 0 && filteredProducts.length > 0 && currentPage > 1) {
+            currentPage = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+            renderCurrentPage();
+            return;
+        }
         if(filteredProducts.length === 0) {
             container.innerHTML = '<div style="text-align:center; padding:40px;">Товары не найдены</div>';
             return;
         }
-        
         let html = '';
         pageProducts.forEach(prod => {
             const imgHtml = prod.image ? `<img src="${prod.image}" alt="${prod.name}">` : '🛠️';
@@ -393,7 +321,6 @@
                     </div></div>`;
         });
         container.innerHTML = html;
-        
         document.querySelectorAll('.qty-dec').forEach(btn => btn.addEventListener('click', (e) => { 
             let id = btn.getAttribute('data-id'); 
             let input = document.querySelector(`.qty-input[data-id="${id}"]`);
@@ -422,12 +349,10 @@
         const container = document.getElementById('loadMoreContainer');
         if (!container) return;
         const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-        
         if (totalPages <= 1) {
             container.innerHTML = '';
             return;
         }
-        
         let html = '<div style="display: flex; justify-content: center; gap: 12px; align-items: center; flex-wrap: wrap;">';
         if (currentPage > 1) {
             html += `<button id="prevPageBtn" class="load-more-btn">← Назад</button>`;
@@ -441,55 +366,31 @@
         
         const prevBtn = document.getElementById('prevPageBtn');
         if (prevBtn) {
-            prevBtn.onclick = () => {
+            prevBtn.addEventListener('click', () => {
                 if (currentPage > 1) {
                     currentPage--;
                     renderCurrentPage();
                     renderPagination();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
-            };
+            });
         }
-        
         const nextBtn = document.getElementById('nextPageBtn');
         if (nextBtn) {
-            nextBtn.onclick = () => {
-                const total = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
-                if (currentPage < total) {
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
                     currentPage++;
                     renderCurrentPage();
                     renderPagination();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
-            };
+            });
         }
-    }
-    
-    // ========== УСКОРЕННОЕ МЕНЮ ==========
-    function attachCategoryEvents() {
-        document.querySelectorAll('.category-item').forEach(cat => {
-            cat.removeEventListener('click', categoryClickHandler);
-            cat.addEventListener('click', categoryClickHandler);
-        });
-    }
-    
-    function categoryClickHandler(e) {
-        let filter = this.getAttribute('data-cat');
-        currentCategory = filter;
-        updateFilteredAndSort();
-        closeSidebar();
     }
     
     function renderSidebarMenu() {
         const contentDiv = document.getElementById('sidebarContent');
         document.getElementById('sidebarTitle').innerText = 'Меню';
-        
-        if (sidebarMenuHTML) {
-            contentDiv.innerHTML = sidebarMenuHTML;
-            attachCategoryEvents();
-            return;
-        }
-        
         const categoriesSet = new Set();
         productsData.forEach(p => {
             if(p.category) {
@@ -504,8 +405,7 @@
             categoriesHtml += `<div class="category-item" data-cat="${catKey}">${cat === 'Все товары' ? '🔄 Все товары' : '📁 ' + cat}</div>`;
         });
         categoriesHtml += '</div>';
-        
-        const menuHTML = categoriesHtml + `
+        contentDiv.innerHTML = categoriesHtml + `
             <div class="contacts-block">
                 <strong>📞 Свяжитесь с нами</strong><br>
                 <a href="tel:+79023982669">📱 +7 (902) 398-26-69</a>
@@ -520,20 +420,20 @@
                 <p style="font-size:12px; margin-top:8px;">🚗 Схема проезда: по ул. Аксенова, центральный вход</p>
             </div>
         `;
-        
-        sidebarMenuHTML = menuHTML;
-        contentDiv.innerHTML = menuHTML;
-        
-        if (!mapInitialized) {
-            ymaps.ready(() => {
-                var myMap = new ymaps.Map("map", { center: [55.117642, 36.614419], zoom: 17, controls: ['zoomControl', 'fullscreenControl'] });
-                var myPlacemark = new ymaps.Placemark([55.117642, 36.614419], { hintContent: 'Хозтовары', balloonContent: 'г. Обнинск, ул. Аксенова, 18а' });
-                myMap.geoObjects.add(myPlacemark);
-                mapInitialized = true;
-            });
+        ymaps.ready(initMap);
+        function initMap() {
+            var myMap = new ymaps.Map("map", { center: [55.117642, 36.614419], zoom: 17, controls: ['zoomControl', 'fullscreenControl'] });
+            var myPlacemark = new ymaps.Placemark([55.117642, 36.614419], { hintContent: 'Хозтовары', balloonContent: 'г. Обнинск, ул. Аксенова, 18а' });
+            myMap.geoObjects.add(myPlacemark);
         }
-        
-        attachCategoryEvents();
+        document.querySelectorAll('.category-item').forEach(cat => {
+            cat.addEventListener('click', (e) => {
+                let filter = cat.getAttribute('data-cat');
+                currentCategory = filter;
+                updateFilteredAndSort();
+                closeSidebar();
+            });
+        });
     }
     
     function renderSidebarCart() {
