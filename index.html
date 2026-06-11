@@ -266,6 +266,37 @@
 .cart-remove:hover {
     opacity: 1 !important;
 }
+
+        /* ===== ФИКСАЦИЯ ЦЕНЫ И КНОПОК ВНИЗУ (ДЛЯ ВСЕХ УСТРОЙСТВ) ===== */
+.product-row {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+}
+
+.product-main {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+}
+
+.product-details {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* ЦЕНА — ПРИЖИМАЕТСЯ К НИЗУ */
+.product-price {
+    margin-top: auto !important;
+    margin-bottom: 8px !important;
+}
+
+/* БЛОК С КНОПКАМИ — ТОЖЕ ВНИЗУ */
+.product-actions {
+    margin-top: auto !important;
+}
+        
     </style>
 </head>
 <body>
