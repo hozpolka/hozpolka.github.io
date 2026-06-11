@@ -179,18 +179,107 @@
         @media (min-width: 1024px) {
             .products-column { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
         }
-        @media (min-width: 768px) {
-            .product-row { display: flex; flex-direction: column; height: 100%; padding: 16px; }
-            .product-image { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 16px; margin-bottom: 12px; }
-            .product-image img { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; }
-            .product-image:not(:has(img)) { font-size: 3rem; }
-            .product-main { display: flex; flex-direction: column; flex-grow: 1; }
-            .product-details { flex-grow: 1; }
-            .product-price { margin-top: auto; margin-bottom: 12px; font-size: 1.2rem; font-weight: 800; }
-            .product-actions { margin-top: 0; display: flex; flex-direction: column; gap: 10px; }
-            .btn-add { width: 100%; padding: 10px; }
-            .product-desc { font-size: 0.8rem; line-height: 1.3; }
-        }
+       /* ===== ДЛЯ ВСЕХ ТЕЛЕФОНОВ ===== */
+@media (max-width: 767px) {
+    .shop-wrapper {
+        overflow-x: hidden;
+    }
+    
+    .products-column {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+    
+    .product-row {
+        padding: 8px !important;
+        min-width: 0;
+    }
+    
+    .product-image {
+        width: 100% !important;
+        height: 100px !important;
+    }
+    
+    .product-title {
+        font-size: 0.7rem !important;
+        word-break: break-word;
+    }
+    
+    .product-desc {
+        display: none;
+    }
+    
+    .product-price {
+        font-size: 0.85rem !important;
+        margin: 4px 0;
+    }
+    
+    .quantity-control {
+        gap: 4px;
+        padding: 2px 4px;
+    }
+    
+    .quantity-control button {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .quantity-control input {
+        width: 32px !important;
+        font-size: 0.7rem !important;
+    }
+    
+    .btn-add {
+        font-size: 0.65rem !important;
+        padding: 6px 6px !important;
+    }
+    
+    /* ШАПКА, О НАС, ПОИСК */
+    .top-bar { margin-bottom: 8px; }
+    .about-section { padding: 12px 14px; margin-bottom: 12px; }
+    .about-title { font-size: 1.1rem; margin-bottom: 8px; }
+    .about-text p { font-size: 0.75rem; margin-bottom: 6px; }
+    .about-images { display: none; }
+    .controls-bar { padding: 8px 12px; margin-bottom: 12px; }
+    .about-grid { flex-direction: column; }
+    
+    /* Скрываем лишнее */
+    .product-badge {
+        display: none;
+    }
+}
+
+/* ===== ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ТЕЛЕФОНОВ (iPhone SE, 375px) ===== */
+@media (max-width: 400px) {
+    .products-column {
+        gap: 6px !important;
+    }
+    
+    .product-row {
+        padding: 6px !important;
+    }
+    
+    .product-title {
+        font-size: 0.65rem !important;
+    }
+    
+    .btn-add {
+        font-size: 0.6rem !important;
+        padding: 5px 4px !important;
+        min-width: 70px !important;
+    }
+    
+    .quantity-control button {
+        width: 20px !important;
+        height: 20px !important;
+    }
+    
+    .quantity-control input {
+        width: 26px !important;
+    }
+}
         /* ===== СТАБИЛЬНАЯ КОРЗИНА ===== */
 .cart-items-list li {
     display: flex !important;
