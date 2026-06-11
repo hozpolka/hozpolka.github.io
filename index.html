@@ -179,21 +179,34 @@
         @media (min-width: 1024px) {
             .products-column { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
         }
-       /* ===== ДЛЯ ВСЕХ ТЕЛЕФОНОВ ===== */
+        @media (min-width: 768px) {
+            .product-row { display: flex; flex-direction: column; height: 100%; padding: 16px; }
+            .product-image { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; background: #ffffff; border-radius: 16px; margin-bottom: 12px; }
+            .product-image img { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; }
+            .product-image:not(:has(img)) { font-size: 3rem; }
+            .product-main { display: flex; flex-direction: column; flex-grow: 1; }
+            .product-details { flex-grow: 1; }
+            .product-price { margin-top: auto; margin-bottom: 12px; font-size: 1.2rem; font-weight: 800; }
+            .product-actions { margin-top: 0; display: flex; flex-direction: column; gap: 10px; }
+            .btn-add { width: 100%; padding: 10px; }
+            .product-desc { font-size: 0.8rem; line-height: 1.3; }
+        }
+/* ===== ДЛЯ ТЕЛЕФОНОВ (ДО 767px) ===== */
 @media (max-width: 767px) {
-    .shop-wrapper {
-        overflow-x: hidden;
-    }
-    
     .products-column {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 8px !important;
+        overflow-x: hidden !important;
+    }
+    
+    .shop-wrapper {
+        overflow-x: hidden !important;
     }
     
     .product-row {
         padding: 8px !important;
-        min-width: 0;
+        min-width: 0 !important;
     }
     
     .product-image {
@@ -203,21 +216,30 @@
     
     .product-title {
         font-size: 0.7rem !important;
-        word-break: break-word;
+        word-break: break-word !important;
     }
     
     .product-desc {
-        display: none;
+        display: none !important;
     }
     
     .product-price {
         font-size: 0.85rem !important;
-        margin: 4px 0;
+        margin: 4px 0 !important;
+    }
+    
+    .product-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 6px !important;
     }
     
     .quantity-control {
-        gap: 4px;
-        padding: 2px 4px;
+        display: flex !important;
+        justify-content: center !important;
+        gap: 4px !important;
+        padding: 2px 4px !important;
     }
     
     .quantity-control button {
@@ -229,29 +251,72 @@
     .quantity-control input {
         width: 32px !important;
         font-size: 0.7rem !important;
+        text-align: center !important;
     }
     
     .btn-add {
         font-size: 0.65rem !important;
-        padding: 6px 6px !important;
+        padding: 6px 8px !important;
     }
     
     /* ШАПКА, О НАС, ПОИСК */
-    .top-bar { margin-bottom: 8px; }
-    .about-section { padding: 12px 14px; margin-bottom: 12px; }
-    .about-title { font-size: 1.1rem; margin-bottom: 8px; }
-    .about-text p { font-size: 0.75rem; margin-bottom: 6px; }
-    .about-images { display: none; }
-    .controls-bar { padding: 8px 12px; margin-bottom: 12px; }
-    .about-grid { flex-direction: column; }
+    .top-bar {
+        margin-bottom: 8px !important;
+        padding: 8px 16px !important;
+    }
     
-    /* Скрываем лишнее */
-    .product-badge {
-        display: none;
+    .logo h1 {
+        font-size: 1.1rem !important;
+    }
+    
+    .working-hours {
+        font-size: 0.65rem !important;
+        padding: 4px 8px !important;
+    }
+    
+    .about-section {
+        padding: 12px 14px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .about-title {
+        font-size: 1.1rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .about-text p {
+        font-size: 0.75rem !important;
+        margin-bottom: 6px !important;
+    }
+    
+    .about-images {
+        display: none !important;
+    }
+    
+    .controls-bar {
+        padding: 8px 12px !important;
+        margin-bottom: 12px !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    .search-box input {
+        padding: 8px 12px !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .sort-box select {
+        padding: 6px 12px !important;
+        font-size: 0.8rem !important;
+        width: 100% !important;
+    }
+    
+    .about-grid {
+        flex-direction: column !important;
     }
 }
 
-/* ===== ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ТЕЛЕФОНОВ (iPhone SE, 375px) ===== */
+/* ===== ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ТЕЛЕФОНОВ (iPhone SE 375px) ===== */
 @media (max-width: 400px) {
     .products-column {
         gap: 6px !important;
@@ -265,21 +330,27 @@
         font-size: 0.65rem !important;
     }
     
+    .product-price {
+        font-size: 0.75rem !important;
+    }
+    
     .btn-add {
-        font-size: 0.6rem !important;
+        font-size: 0.55rem !important;
         padding: 5px 4px !important;
-        min-width: 70px !important;
     }
     
     .quantity-control button {
         width: 20px !important;
         height: 20px !important;
+        font-size: 0.65rem !important;
     }
     
     .quantity-control input {
         width: 26px !important;
+        font-size: 0.65rem !important;
     }
 }
+        
         /* ===== СТАБИЛЬНАЯ КОРЗИНА ===== */
 .cart-items-list li {
     display: flex !important;
