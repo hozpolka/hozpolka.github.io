@@ -90,20 +90,24 @@
     /* ФОТО — НЕ РАСТЯГИВАЮТСЯ */
     .product-image {
         width: 100% !important;
-        height: 160px !important;
+        height: 130px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         background: #ffffff;
         border-radius: 12px;
+        margin: 0 auto !important;           /* ← ДОБАВЬ ЭТО */
+    text-align: center !important;
     }
     
     .product-image img {
         width: auto !important;
         height: auto !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
+        max-width: 90% !important;
+        max-height: 90% !important;
         object-fit: contain !important;
+         display: block !important;            /* ← ДОБАВЬ ЭТО */
+    margin: 0 auto !important;
     }
     
     /* ЦЕНТРИРОВАНИЕ */
