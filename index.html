@@ -312,6 +312,76 @@ body {
     overflow-x: hidden !important;
     width: 100% !important;
 }
+
+/* ===== КРАСИВАЯ СОРТИРОВКА РЯДОМ С ПОИСКОМ ===== */
+.controls-bar {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 12px !important;
+    background: white;
+    border-radius: 60px;
+    padding: 8px 16px;
+}
+
+.search-box {
+    flex: 3 !important;
+    min-width: 0 !important;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 60px;
+    border: 1px solid #cdddc2;
+    background: white;
+    font-size: 1rem;
+}
+
+.sort-box {
+    flex: 1 !important;
+    min-width: 140px !important;
+}
+
+.sort-box select {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 60px;
+    border: 1px solid #cdddc2;
+    background: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1a2a1f;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%232c5e2a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+/* ДЛЯ ТЕЛЕФОНОВ */
+@media (max-width: 700px) {
+    .controls-bar {
+        gap: 8px;
+        padding: 6px 12px;
+    }
+    
+    .sort-box {
+        min-width: 110px !important;
+    }
+    
+    .sort-box select {
+        padding: 8px 28px 8px 12px;
+        font-size: 0.75rem;
+        background-position: right 10px center;
+    }
+    
+    .search-box input {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+    }
+}
         
     </style>
 </head>
@@ -621,7 +691,7 @@ body {
         let categoriesHtml = '<div class="categories-list">';
         categories.forEach(cat => {
             const catKey = cat === 'Все товары' ? 'all' : cat;
-            categoriesHtml += `<div class="category-item" data-cat="${catKey}">${cat === 'Все товары' ? '🔄 Все товары' : '📁 ' + cat}</div>`;
+            categoriesHtml += `<div class="category-item" data-cat="${catKey}">${cat === 'Все товары' ? '🔄 Все товары' : cat}</div>`;
         });
         categoriesHtml += '</div>';
         contentDiv.innerHTML = categoriesHtml + `
