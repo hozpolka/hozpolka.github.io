@@ -201,14 +201,7 @@
             .product-price { margin-top: auto; margin-bottom: 12px; font-size: 1.2rem; font-weight: 800; }
             .product-actions { margin-top: 0; display: flex; flex-direction: column; gap: 10px; }
             .btn-add { width: 100%; padding: 10px; }
-            .product-desc {
-   /* display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;*/
-    font-size: 0.7rem;
-    line-height: 1.2;
-}
+            .product-desc { font-size: 0.8rem; line-height: 1.3; }
         }
         /* ===== СТАБИЛЬНАЯ КОРЗИНА ===== */
 .cart-items-list li {
@@ -769,10 +762,7 @@ body {
         if(!name || !phone) { showToast('Заполните имя и телефон'); return; }
         if(cart.length===0) { showToast('Корзина пуста'); return; }
         let details = '', total=0;
-        cart.forEach(i => { let s=i.price*i.quantity; total+=s; 
-                            details += `${i.name} — ${i.quantity} шт. = ${s}₽\n`;
-                            details += `   Описание: ${i.shortDesc || 'Нет описания'}\n`;
-                            details += `   Подробно: ${(i.fullDesc || '').substring(0, 100)}...\n\n`;
+        cart.forEach(i => { let s=i.price*i.quantity; total+=s; details += `${i.name} — ${i.quantity} шт. = ${s}₽\n`; });
         const msg = `ЗАКАЗ\nКлиент: ${name}\nТелефон: ${phone}\nКоммент: ${comment||'-'}\n${details}\nИТОГО: ${total} ₽`;
         try {
             let fd = new FormData(); fd.append('email', YOUR_EMAIL); fd.append('subject', 'Новый заказ'); fd.append('message', msg);
