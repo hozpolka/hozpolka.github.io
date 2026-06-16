@@ -125,8 +125,15 @@
     }
     
     .product-desc {
-        display: none;
-    }
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-size: 0.65rem !important;
+    line-height: 1.2 !important;
+    color: #5f7359 !important;
+    text-align: center !important;
+}
     
     .product-price {
         font-size: 0.9rem !important;
@@ -756,21 +763,28 @@ body {
     }
     
     async function sendOrderHandler() {
-        const name = document.getElementById('sideName')?.value.trim();
-        const phone = document.getElementById('sidePhone')?.value.trim();
-        const comment = document.getElementById('sideComment')?.value;
-        if(!name || !phone) { showToast('Заполните имя и телефон'); return; }
-        if(cart.length===0) { showToast('Корзина пуста'); return; }
-        let details = '', total=0;
-        cart.forEach(i => { let s=i.price*i.quantity; total+=s; details += `${i.name} — ${i.quantity} шт. = ${s}₽\n`; });
-        const msg = `ЗАКАЗ\nКлиент: ${name}\nТелефон: ${phone}\nКоммент: ${comment||'-'}\n${details}\nИТОГО: ${total} ₽`;
-        try {
-            let fd = new FormData(); fd.append('email', YOUR_EMAIL); fd.append('subject', 'Новый заказ'); fd.append('message', msg);
-            let resp = await fetch('https://formsubmit.co/ajax/' + YOUR_EMAIL, { method: 'POST', body: fd });
-            if(resp.ok) { showToast('Заказ отправлен! Мы свяжемся с вами'); clearCart(); closeSidebar(); }
-            else throw new Error();
-        } catch(e) { showToast('Ошибка отправки, свяжитесь по телефону'); }
-    }
+    const name = document.getElementById('sideName')?.value.trim();
+    const phone = document.getElementById('sidePhone')?.value.trim();
+    const comment = document.getElementById('sideComment')?.value;
+    if(!name || !phone) { showToast('Заполните имя и телефон'); return; }
+    if(cart.length===0) { showToast('Корзина пуста'); return; }
+    let details = '', total=0;
+    cart.forEach(i => { 
+        let s = i.price * i.quantity; 
+        total += s; 
+        details += `${i.name} — ${i.quantity} шт. = ${s}₽\n`;
+        if (i.shortDesc) details += `   📝 ${i.shortDesc}\n`;
+        if (i.fullDesc) details += `   📄 ${i.fullDesc.substring(0, 100)}${i.fullDesc.length > 100 ? '...' : ''}\n`;
+        details += '\n';
+    });
+    const msg = `🛒 НОВЫЙ ЗАКАЗ\n\nКлиент: ${name}\nТелефон: ${phone}\nКоммент: ${comment || '-'}\n\n📦 Товары:\n${details}\n💰 ИТОГО: ${total} ₽\n\n📞 Свяжитесь с клиентом!`;
+    try {
+        let fd = new FormData(); fd.append('email', YOUR_EMAIL); fd.append('subject', '🛒 Новый заказ!'); fd.append('message', msg);
+        let resp = await fetch('https://formsubmit.co/ajax/' + YOUR_EMAIL, { method: 'POST', body: fd });
+        if(resp.ok) { showToast('✅ Заказ отправлен! Мы свяжемся с вами'); clearCart(); closeSidebar(); }
+        else throw new Error();
+    } catch(e) { showToast('⚠️ Ошибка отправки. Заказ скопирован в буфер!'); await navigator.clipboard.writeText(msg); clearCart(); closeSidebar(); }
+}
     
     function openSidebar(mode) {
         currentSidebarMode = mode;
