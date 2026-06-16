@@ -772,18 +772,31 @@ body {
     cart.forEach(i => { 
         let s = i.price * i.quantity; 
         total += s; 
-        details += `${i.name} — ${i.quantity} шт. = ${s}₽\n`;
+        details += `🔹 ${i.name} — ${i.quantity} шт. = ${s}₽\n`;
         if (i.shortDesc) details += `   📝 ${i.shortDesc}\n`;
-        if (i.fullDesc) details += `   📄 ${i.fullDesc.substring(0, 100)}${i.fullDesc.length > 100 ? '...' : ''}\n`;
+        if (i.fullDesc) details += `   📄 ${i.fullDesc.substring(0, 120)}${i.fullDesc.length > 120 ? '...' : ''}\n`;
         details += '\n';
     });
-    const msg = `🛒 НОВЫЙ ЗАКАЗ\n\nКлиент: ${name}\nТелефон: ${phone}\nКоммент: ${comment || '-'}\n\n📦 Товары:\n${details}\n💰 ИТОГО: ${total} ₽\n\n📞 Свяжитесь с клиентом!`;
+    const msg = `🛒 НОВЫЙ ЗАКАЗ\n\n👤 Клиент: ${name}\n📞 Телефон: ${phone}\n💬 Коммент: ${comment || '-'}\n\n📦 Товары:\n${details}\n💰 ИТОГО: ${total} ₽\n\n📞 Свяжитесь с клиентом как можно скорее!`;
     try {
-        let fd = new FormData(); fd.append('email', YOUR_EMAIL); fd.append('subject', '🛒 Новый заказ!'); fd.append('message', msg);
+        let fd = new FormData(); 
+        fd.append('email', YOUR_EMAIL); 
+        fd.append('subject', '🛒 Новый заказ!'); 
+        fd.append('message', msg);
         let resp = await fetch('https://formsubmit.co/ajax/' + YOUR_EMAIL, { method: 'POST', body: fd });
-        if(resp.ok) { showToast('✅ Заказ отправлен! Мы свяжемся с вами'); clearCart(); closeSidebar(); }
-        else throw new Error();
-    } catch(e) { showToast('⚠️ Ошибка отправки. Заказ скопирован в буфер!'); await navigator.clipboard.writeText(msg); clearCart(); closeSidebar(); }
+        if(resp.ok) { 
+            showToast('✅ Заказ отправлен! Мы свяжемся с вами'); 
+            clearCart(); 
+            closeSidebar(); 
+        } else {
+            throw new Error();
+        }
+    } catch(e) { 
+        showToast('⚠️ Ошибка отправки. Заказ скопирован в буфер!'); 
+        await navigator.clipboard.writeText(msg); 
+        clearCart(); 
+        closeSidebar(); 
+    }
 }
     
     function openSidebar(mode) {
