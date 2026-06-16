@@ -762,7 +762,7 @@ body {
         document.getElementById('sidebarTitle').innerText = 'Корзина';
         if(cart.length === 0) {
             contentDiv.innerHTML = `<p>Корзина пуста</p><button id="clearCartSidebarBtn" style="margin-top:10px;">Очистить</button>
-            <div class="order-form-mini"><h4>Оформить заказ</h4><input type="text" id="sideName" placeholder="Имя"><input type="tel" id="sidePhone" placeholder="Телефон"><textarea id="sideComment" rows="2" placeholder="Комментарий"></textarea><button id="sendOrderSidebarBtn" class="btn-send">📨 Отправить</button></div>`;
+            <div class="order-form-mini"><h4>Оформить заказ</h4><input type="text" id="sideName" placeholder="Имя"><input type="tel" id="sidePhone" placeholder="Телефон"><textarea id="sideComment" rows="2" placeholder="Комментарий"></textarea><button id="sendOrderSidebarBtn" class="btn-send" onclick="sendOrderHandler()" style="pointer-events:auto;cursor:pointer;z-index:99999;position:relative;">📨 Отправить</button></div>`;
             attachCartEvents();
             return;
         }
@@ -772,7 +772,7 @@ body {
             html += `<li><div><b>${item.name}</b><br>${item.price}₽/шт</div><div class="cart-quantity"><button class="cart-qty-dec" data-id="${item.id}">−</button><span>${item.quantity}</span><button class="cart-qty-inc" data-id="${item.id}">+</button><button class="cart-remove" data-id="${item.id}">🗑</button></div><div><b>${sum}₽</b></div></li>`;
         });
         html += `</ul><div style="font-weight:800; text-align:right;">Итого: ${total} ₽</div><button id="clearCartSidebarBtn" style="background:none; border:1px solid #bc9a6b; padding:6px; border-radius:40px; margin:10px 0;">Очистить корзину</button>
-        <div class="order-form-mini"><h4>Оформить заказ</h4><input type="text" id="sideName" placeholder="Имя"><input type="tel" id="sidePhone" placeholder="Телефон"><textarea id="sideComment" rows="2" placeholder="Комментарий"></textarea><button id="sendOrderSidebarBtn" class="btn-send">📨 Отправить</button></div>`;
+        <div class="order-form-mini"><h4>Оформить заказ</h4><input type="text" id="sideName" placeholder="Имя"><input type="tel" id="sidePhone" placeholder="Телефон"><textarea id="sideComment" rows="2" placeholder="Комментарий"></textarea><button id="sendOrderSidebarBtn" class="btn-send" onclick="sendOrderHandler()" style="pointer-events:auto;cursor:pointer;z-index:99999;position:relative;">📨 Отправить</button></div>`;
         contentDiv.innerHTML = html;
         attachCartEvents();
     }
