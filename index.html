@@ -527,7 +527,22 @@ body {
     }
     
     function saveCart() { localStorage.setItem('hoz_cart_final', JSON.stringify(cart)); updateCartUI(); updateFloatingBadge(); }
-    function loadCart() { const saved = localStorage.getItem('hoz_cart_final'); if(saved) cart = JSON.parse(saved); else cart = []; updateCartUI(); updateFloatingBadge(); }
+    function loadCart() { 
+    const saved = localStorage.getItem('hoz_cart_final'); 
+    if(saved) {
+        cart = JSON.parse(saved);
+        // Если у старых товаров нет shortDesc/fullDesc — добавим пустые
+        cart = cart.map(item => ({
+            ...item,
+            shortDesc: item.shortDesc || '',
+            fullDesc: item.fullDesc || ''
+        }));
+    } else {
+        cart = [];
+    }
+    updateCartUI(); 
+    updateFloatingBadge(); 
+}
     function updateCartUI() { if(currentSidebarMode === 'cart') renderSidebarCart(); updateFloatingBadge(); }
     function updateFloatingBadge() { 
         let cnt = cart.reduce((a,i)=>a+i.quantity,0);
@@ -547,16 +562,26 @@ body {
     function removeFromCartById(id) { cart = cart.filter(i => i.id != id); saveCart(); if(currentSidebarMode === 'cart') renderSidebarCart(); showToast('🗑 Товар удалён из корзины'); }
     function clearCart() { cart = []; saveCart(); if(currentSidebarMode === 'cart') renderSidebarCart(); showToast('Корзина очищена'); }
     function addToCartFromMain(id, qtyToAdd) {
-        const product = productsData.find(p => p.id == id);
-        if(!product) return;
-        let existing = cart.find(i => i.id == id);
-        if(existing) existing.quantity += qtyToAdd;
-        else cart.push({ id: product.id, name: product.name, price: product.price, quantity: qtyToAdd });
-        saveCart();
-        const inputField = document.querySelector(`.qty-input[data-id="${id}"]`);
-        if(inputField) inputField.value = 1;
-        showToast(`✅ ${product.name} +${qtyToAdd} шт.`);
+    const product = productsData.find(p => p.id == id);
+    if(!product) return;
+    let existing = cart.find(i => i.id == id);
+    if(existing) {
+        existing.quantity += qtyToAdd;
+    } else {
+        cart.push({ 
+            id: product.id, 
+            name: product.name, 
+            price: product.price, 
+            quantity: qtyToAdd,
+            shortDesc: product.shortDesc || '',
+            fullDesc: product.fullDesc || ''
+        });
     }
+    saveCart();
+    const inputField = document.querySelector(`.qty-input[data-id="${id}"]`);
+    if(inputField) inputField.value = 1;
+    showToast(`✅ ${product.name} +${qtyToAdd} шт.`);
+}
     
     function updateFilteredAndSort() {
         let filtered = productsData.filter(p => {
