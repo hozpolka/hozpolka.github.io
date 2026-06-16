@@ -796,15 +796,12 @@ body {
         attachCartEvents();
     }
     
-    function attachCartEvents() {
-        document.querySelectorAll('.cart-qty-dec').forEach(btn => btn.addEventListener('click', (e) => { let id = btn.getAttribute('data-id'); changeQty(id, -1); renderSidebarCart(); }));
-        document.querySelectorAll('.cart-qty-inc').forEach(btn => btn.addEventListener('click', (e) => { let id = btn.getAttribute('data-id'); changeQty(id, 1); renderSidebarCart(); }));
-        document.querySelectorAll('.cart-remove').forEach(btn => btn.addEventListener('click', (e) => { let id = btn.getAttribute('data-id'); removeFromCartById(id); renderSidebarCart(); }));
-        const clearBtn = document.getElementById('clearCartSidebarBtn');
-        if(clearBtn) clearBtn.onclick = () => { clearCart(); if(currentSidebarMode==='cart') renderSidebarCart(); };
-        const sendBtn = document.getElementById('sendOrderSidebarBtn');
-        if(sendBtn) sendBtn.onclick = sendOrderHandler;
-    }
+    const sendBtn = document.getElementById('sendOrderSidebarBtn');
+if (sendBtn) {
+    sendBtn.onclick = sendOrderHandler;
+    sendBtn.style.pointerEvents = 'auto';
+    sendBtn.style.cursor = 'pointer';
+}
     
     async function sendOrderHandler() {
     const name = document.getElementById('sideName')?.value.trim();
