@@ -389,25 +389,6 @@ body {
         font-size: 0.75rem;
     }
 }
-/* ===== ФИКС КНОПКИ ОТПРАВИТЬ В КОРЗИНЕ ===== */
-#sendOrderSidebarBtn {
-    z-index: 999999 !important;
-    position: relative !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    opacity: 1 !important;
-    display: block !important;
-}
-
-.order-form-mini {
-    position: relative !important;
-    z-index: 99999 !important;
-}
-
-.sidebar {
-    z-index: 9999 !important;
-}
-
         
     </style>
 </head>
@@ -796,12 +777,15 @@ body {
         attachCartEvents();
     }
     
-    const sendBtn = document.getElementById('sendOrderSidebarBtn');
-if (sendBtn) {
-    sendBtn.onclick = sendOrderHandler;
-    sendBtn.style.pointerEvents = 'auto';
-    sendBtn.style.cursor = 'pointer';
-}
+    function attachCartEvents() {
+        document.querySelectorAll('.cart-qty-dec').forEach(btn => btn.addEventListener('click', (e) => { let id = btn.getAttribute('data-id'); changeQty(id, -1); renderSidebarCart(); }));
+        document.querySelectorAll('.cart-qty-inc').forEach(btn => btn.addEventListener('click', (e) => { let id = btn.getAttribute('data-id'); changeQty(id, 1); renderSidebarCart(); }));
+        document.querySelectorAll('.cart-remove').forEach(btn => btn.addEventListener('click', (e) => { let id = btn.getAttribute('data-id'); removeFromCartById(id); renderSidebarCart(); }));
+        const clearBtn = document.getElementById('clearCartSidebarBtn');
+        if(clearBtn) clearBtn.onclick = () => { clearCart(); if(currentSidebarMode==='cart') renderSidebarCart(); };
+        const sendBtn = document.getElementById('sendOrderSidebarBtn');
+        if(sendBtn) sendBtn.onclick = sendOrderHandler;
+    }
     
     async function sendOrderHandler() {
     const name = document.getElementById('sideName')?.value.trim();
